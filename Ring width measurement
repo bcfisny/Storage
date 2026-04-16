@@ -1,0 +1,42 @@
+/* Calculates the width of a ring (green) at multiple points across its diameter
+ * Puts superpixels in the ring to then measure the distance to the background and innside (blue)
+ * User can enter a manual region of interest to start
+ */
+
+setImageType('FLUORESCENCE');
+
+//selects the manual annotation so it can be used in the pixel classifier
+selectAnnotations();
+
+//sets the default annotation as the background
+var annotations = getAnnotationObjects()
+def classification = getPathClass('Background')
+annotations.each{it.setPathClass(classification)}
+
+//Runs the pixel classifier to create green, blue and background annotations
+createAnnotationsFromPixelClassifier("BGB classifier", 50.0, 50.0)
+
+//Selects the green annotations so superpixels can be created inside of it
+selectObjectsByClassification("Green")
+
+//Creates small pixels inside the Green annotation to measure their distance to the background and blue annotations
+runPlugin('qupath.imagej.superpixels.SLICSuperpixelsPlugin', '{"sigmaPixels":5.0,"spacingMicrons":1.0,"maxIterations":10,"regularization":0.25,"adaptRegularization":false,"useDeconvolved":false}')
+
+//finds the distance from the superpixels to the outer and inner annotations
+detectionToAnnotationDistancesSigned(true)
+
+//Selcts the superpixels and calcualtes their mean,stdev,meadian,min and max intensities
+selectDetections();
+runPlugin('qupath.lib.algorithms.IntensityFeaturesPlugin', '{"pixelSizeMicrons":2.0,"region":"ROI","tileSizeMicrons":25.0,"channel1":false,"channel2":true,"doMean":true,"doStdDev":true,"doMinMax":true,"doMedian":true,"doHaralick":false,"haralickMin":NaN,"haralickMax":NaN,"haralickDistance":1,"haralickBins":32}')
+
+/*
+//extracts the name of the image so it can be used when saving the output statistics 
+def imageName = GeneralTools.getNameWithoutExtension(getCurrentImageData().getServer().getMetadata().getName())
+
+def path_annotation = '/path'
+def path_detection = '/path'
+
+//saves the statistics to a csv (must use forward slashes for the path on windows)
+saveDetectionMeasurements(path_detection+'detection'+imageName+'.csv')
+//saveAnnotationMeasurements(path_annotation+'annotation'+imageName+'.csv')
+*/
