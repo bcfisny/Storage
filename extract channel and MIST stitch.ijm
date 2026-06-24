@@ -11,7 +11,7 @@ if(multichannel != "yes" && multichannel != "no"){
 }
 
 //directory containing the raw tiles. Use \\ on windows and end the path with \\
-dir = "C:\\Users\\bfisler\\Downloads\\New folder\\";
+dir = "C:\\Users\\Downloads\\New folder\\";
 
 // Get a list of all  files in the directory
 list = getFileList(dir);
@@ -25,7 +25,7 @@ list = getFileList(dir);
 if(multichannel == "no"){
 
 	//directory to save new single channel images
-	dir_out = "C:\\Users\\bfisler\\Downloads\\New folder\\output\\";
+	dir_out = "C:\\Users\\Downloads\\New folder\\output\\";
 	
 	// Check if the strings are identical
 	if (dir == dir_out) {
@@ -132,8 +132,8 @@ run("MIST",
     "programtype=AUTO numcputhreads=32 loadfftwplan=true " +
     "savefftwplan=true fftwplantype=MEASURE " +
     "fftwlibraryname=libfftw3 fftwlibraryfilename=libfftw3.dll " +
-    "planpath=[C:\\Users\\bfisler\\Downloads\\Fiji.app\\lib\\fftw\\fftPlans] " +
-    "fftwlibrarypath=[C:\\Users\\bfisler\\Downloads\\Fiji.app\\lib\\fftw] " +
+    "planpath=[C:\\Users\\Downloads\\Fiji.app\\lib\\fftw\\fftPlans] " +
+    "fftwlibrarypath=[C:\\Users\\Downloads\\Fiji.app\\lib\\fftw] " +
     "stagerepeatability=0 horizontaloverlap=NaN verticaloverlap=NaN " +
     "numfftpeaks=0 overlapuncertainty=NaN " +
     "isusedoubleprecision=false isusebioformats=false " +

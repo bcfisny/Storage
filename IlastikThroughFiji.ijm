@@ -8,7 +8,7 @@ h5_suffix = "/Data"
 ilastik_project = "C:\\Users\\Downloads\\ilastik.ilp"
 
 //directory containing the images. Use \\ on windows and end the path with \\
-dir = "C:\\Users\\bfisler\\Downloads\\New folder\\h5 folder\\"  
+dir = "C:\\Users\\Downloads\\New folder\\h5 folder\\"  
 
 dir_out = "C:\\Users\\Downloads\\New folder\\h5 folder\\output\\" 
 
