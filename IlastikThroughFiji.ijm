@@ -5,10 +5,12 @@ setBatchMode(true);
 h5_suffix = "/Data"
 
 //path to ilastik project
-ilastik_project = "C:\\Users\\.openjfx\\Documents\\Xi_ilastik.ilp" 
+ilastik_project = "C:\\Users\\Downloads\\ilastik.ilp"
 
-//directory containing the images
-dir = "C:\\Users\\.openjfx\\Documents\\Ilastik\\"  
+//directory containing the images. Use \\ on windows and end the path with \\
+dir = "C:\\Users\\bfisler\\Downloads\\New folder\\h5 folder\\"  
+
+dir_out = "C:\\Users\\Downloads\\New folder\\h5 folder\\output\\" 
 
 // Get a list of all  files in the directory
 list = getFileList(dir);
@@ -18,23 +20,20 @@ for (i = 0; i < list.length; i++) {
 	if (endsWith(list[i], ".h5") || endsWith(list[i], ".hdf5")) {
 	
 		//save the file name and path
-	    filePath = dir + list[i];
+	    filePath =  "" + dir + "" + list[i];
 	   
-		run("Import HDF5", "select=[" + filePath + "] datasetname="+ h5_suffix +" axisorder=tzyxc");
+		run("Import HDF5", "select=[" + filePath + "] datasetname=["+ h5_suffix +"] axisorder=tzyxc");
 		id_hdf5 = getImageID();
 	
 		//runs the ilastik pixel classifier
-		run("Run Pixel Classification Prediction", "projectfilename="+ ilastik_project +" inputimage="+ list[i] +" pixelclassificationtype=Probabilities");
+		run("Run Pixel Classification Prediction", "projectfilename=["+ ilastik_project +"] inputimage=["+ list[i] +"] pixelclassificationtype=Probabilities");
 	
 		//saves the image as a tiff
-		saveAs("Tiff", "C:\\Users\\.openjfx\\Documents\\Ilastik\\results\\" + list[i] + ".tif");
-		id_tiff = getImageID();
+		saveAs("Tiff", dir_out + list[i] + ".tif");
 	
 	    // Close the hdf5 and tiff image after processing
-	    selectImage(id_hdf5);
-        close();
-        selectImage(id_tiff);
-        close();
+	    run("Close All");
+	    
 	}
 }
 
