@@ -25,7 +25,7 @@ list = getFileList(dir);
 if(multichannel == "no"){
 
 	//directory to save new single channel images
-	dir_out = "C:\\Users\\Downloads\\New folder\\output\\";
+	dir_out = "C:\\Users\\Downloads\\New folder\\Single_Channel\\";
 	
 	// Check if the strings are identical
 	if (dir == dir_out) {
@@ -42,14 +42,14 @@ if(multichannel == "no"){
 	for (i = 0; i < list.length; i++) {
 		
 		// Build full path
-	    filePath =  "" + dir + "" + list[i];
+	    filePath =  dir + list[i];
 	    
 	    //skips any folders in the path
     	if (!File.isDirectory(filePath)) {
     		
 		    run("Bio-Formats Importer", "open=[" + filePath + "]");
 		
-		    // Get the image title (needed for saving)
+		    // Get the image title (needed for channel extraction)
 		    title = getTitle();
 		
 			// Split channels
@@ -65,7 +65,8 @@ if(multichannel == "no"){
 			else
 		    		exit("Invalid channel number");
 		    
-		    run("Bio-Formats Exporter", "save=[" + dir_out + prefix + title + "].tif compression=LZW");
+		    
+		    saveAs("Tiff", dir_out + prefix + list[i]);
 		    close("*");
     	}
 	    
@@ -87,11 +88,10 @@ else if(multichannel == "yes"){
 //directory to save stitched image output
 dir_final = "E:\\data\\Ben\\RGB_Test\\Output2\\";
 
-//use p for numbers and add .tif to the end (use .tif.tif for single channel images)
+//use p for numbers and add .tif to the end (try .tif.tif if the filename ends in .tif)
 filename = prefix + "AD3C-2-20X_{ppppp}_CH4.tif";
 
 //number of tiles in each direction
-//Toss the .gci file into an LLM to get the width and height of the stitched image
 horizontal_width = 18;
 vertical_width = 14;
 

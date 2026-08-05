@@ -1,13 +1,13 @@
 //directory containing the images. Use \\ on windows and end the path with \\
-dir = "D:\\test macro\\"
+dir = "C:\\Users\\Downloads\\New folder\\";
 
 // Get a list of all  files in the directory
 list = getFileList(dir);
 
 //output directory
-dir_out = "D:\\test macro\\output\\"
+dir_out = "C:\\Users\\Downloads\\New folder\\output\\";
 
-searchword = "Cy5";
+searchword = "Alexa";
 
 image_num = 0;
 
@@ -15,7 +15,7 @@ image_num = 0;
 for (i = 0; i < list.length; i++) {
 	
 	
-    filePath = "" + dir + "" + list[i];
+    filePath = dir + list[i];
     
     //skips any folders in the path
     if (!File.isDirectory(filePath)) {
